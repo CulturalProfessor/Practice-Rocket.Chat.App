@@ -1,0 +1,16 @@
+{
+    "id": "555aef44-f36e-4986-980b-bb3c8bef5b10",
+    "version": "0.0.1",
+    "requiredApiVersion": "^1.19.0",
+    "iconFile": "icon.png",
+    "author": {
+        "name": "Vinayak Sharma",
+        "homepage": "n/a",
+        "support": "n/a"
+    },
+    "name": "Practice-Rocket.Chat",
+    "nameSlug": "practice-rocketchat",
+    "classFile": "PracticeRocketChatApp.ts",
+    "description": "Practice App for understanding Rocket.Chat.Apps.Engine",
+    "implements": []
+}
