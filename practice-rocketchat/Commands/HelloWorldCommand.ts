@@ -15,7 +15,7 @@ import {
   import {IUser} from '@rocket.chat/apps-engine/definition/users'
 
   export class HelloWorldCommand implements ISlashCommand {
-    public command = 'hello'
+    public command = 'hello-test'
     public i18nDescription = ''
     public providesPreview = false
     public i18nParamsExample = ''
@@ -31,7 +31,7 @@ import {
       const sender: IUser = (await read.getUserReader().getAppUser()) as IUser
       const room: IRoom = context.getRoom()
       const messageTemplate: IMessage = {
-        text: 'Hello, World!',
+        text: 'Hello, World! from practice app outside repo by v',
         sender,
         room
       }
