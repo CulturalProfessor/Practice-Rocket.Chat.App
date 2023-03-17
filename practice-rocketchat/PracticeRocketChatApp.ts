@@ -12,6 +12,8 @@ export class PracticeRocketChatApp extends App {
     appLogger: ILogger;
     constructor(info: IAppInfo, logger: ILogger, accessors: IAppAccessors) {
         super(info, logger, accessors);
+        this.appLogger = this.getLogger();
+        this.appLogger.debug("Summ");
     }
 
     public async extendConfiguration(

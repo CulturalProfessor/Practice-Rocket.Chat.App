@@ -5,7 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-async function TextSummary(prompt: any) {
+export async function TextSummary(prompt: any) {
     const response = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: prompt,

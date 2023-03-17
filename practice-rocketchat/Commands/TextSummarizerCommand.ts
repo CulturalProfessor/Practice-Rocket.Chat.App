@@ -6,57 +6,31 @@ import {
     IPersistence,
     IPersistenceRead,
     IRead,
+    ILogger,
+    IRoomRead,
+    IAppAccessors,
 } from "@rocket.chat/apps-engine/definition/accessors";
+import { App } from "@rocket.chat/apps-engine/definition/App";
 import { IMessage } from "@rocket.chat/apps-engine/definition/messages";
 import { IRoom } from "@rocket.chat/apps-engine/definition/rooms";
 import {
     ISlashCommand,
     SlashCommandContext,
 } from "@rocket.chat/apps-engine/definition/slashcommands";
+import { IAppInfo } from "@rocket.chat/apps-engine/definition/metadata";
 import { IUser } from "@rocket.chat/apps-engine/definition/users";
 import {
     RocketChatAssociationModel,
     RocketChatAssociationRecord,
 } from "@rocket.chat/apps-engine/definition/metadata";
+import { TextSummary } from "../OpenAI";
 
 export class TextSummarizerCommand implements ISlashCommand {
     public command = "summarize";
     public i18nDescription = "";
     public providesPreview = false;
     public i18nParamsExample = "";
-
-    // query all records by room within the "scope" - message
-    public static async findByRoom(
-        persis: IPersistenceRead,
-        room: IRoom
-    ): Promise<Array<string>> {
-        const associations: Array<RocketChatAssociationRecord> = [
-            new RocketChatAssociationRecord(
-                RocketChatAssociationModel.MISC,
-                "message"
-            ),
-            new RocketChatAssociationRecord(
-                RocketChatAssociationModel.ROOM,
-                room.id
-            ),
-        ];
-
-        let result: Array<string> = [];
-        try {
-            const records: Array<{ id: string }> =
-                (await persis.readByAssociations(associations)) as Array<{
-                    id: string;
-                }>;
-
-            if (records.length) {
-                result = records.map(({ id }) => id);
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-
-        return result;
-    }
+    public appLogger: ILogger;
 
     public async executor(
         context: SlashCommandContext,
@@ -70,14 +44,18 @@ export class TextSummarizerCommand implements ISlashCommand {
             .getUserReader()
             .getAppUser()) as IUser;
         const room: IRoom = context.getRoom();
-        const persisRead: IPersistenceRead = read.getPersistenceReader();
-        const messagesArray = await TextSummarizerCommand.findByRoom(
-            persisRead,
-            room
-        );
-        const messages = messagesArray.join(" ");
+        console.log("hey");
+
+        const appAccessor: IRoomRead = read.getRoomReader();
+        const messages: Array<IMessage> = [
+            ...(await appAccessor.getMessages(room.id)),
+        ];
+        console.log(messages);
+        messages.join();
+
+        const result= await TextSummary(messages);
         const messageTemplate: IMessage = {
-            text: messages,
+            text: "summarizer",
             sender,
             room,
         };
