@@ -6,7 +6,6 @@ import {
 import { App } from "@rocket.chat/apps-engine/definition/App";
 import { IAppInfo } from "@rocket.chat/apps-engine/definition/metadata";
 import { HelloWorldCommand } from "./Commands/HelloWorldCommand";
-import { TextSummarizerCommand } from "./Commands/TextSummarizerCommand";
 
 export class PracticeRocketChatApp extends App {
     appLogger: ILogger;
@@ -20,12 +19,8 @@ export class PracticeRocketChatApp extends App {
         configuration: IConfigurationExtend
     ): Promise<void> {
         const helloWorldCommand: HelloWorldCommand = new HelloWorldCommand();
-        const textSummarizerCommand: TextSummarizerCommand = new TextSummarizerCommand();
         await configuration.slashCommands.provideSlashCommand(
             helloWorldCommand
-        );
-        await configuration.slashCommands.provideSlashCommand(
-            textSummarizerCommand
         );
     }
 }
