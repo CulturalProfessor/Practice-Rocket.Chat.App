@@ -2,29 +2,30 @@ import {
     IHttp,
     IModify,
     IPersistence,
-    IRead,
-    IUIKitInteractionParam,
+    IRead
 } from "@rocket.chat/apps-engine/definition/accessors";
 import {
     UIKitInteractionContext,
     UIKitSurfaceType,
 } from "@rocket.chat/apps-engine/definition/uikit";
 import { IUIKitModalViewParam } from "@rocket.chat/apps-engine/definition/uikit/UIKitInteractionResponder";
+import { SlashCommandContext } from "@rocket.chat/apps-engine/definition/slashcommands";
 
 export async function BasicModal({
-    modify
+    modify,
 }: {
     modify: IModify;
     read: IRead;
     persistence: IPersistence;
     http: IHttp;
     uikitcontext?: UIKitInteractionContext;
+    slashcommandcontext?: SlashCommandContext;
 }): Promise<IUIKitModalViewParam> {
     const block = modify.getCreator().getBlockBuilder();
 
     block.newPlainTextInputElement({
-        actionId: "assignee",
-        placeholder: block.newPlainTextObject("Assignee"),
+        actionId: "Vinayak",
+        placeholder: block.newPlainTextObject("Hey"),
     });
     const value = {
         appId: "practice-rocketchat",
@@ -36,6 +37,5 @@ export async function BasicModal({
             text: block.newPlainTextObject("Submit"),
         }),
     };
-
     return value;
 }

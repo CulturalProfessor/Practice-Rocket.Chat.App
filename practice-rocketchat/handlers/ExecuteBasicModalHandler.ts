@@ -3,7 +3,6 @@ import {
     IModify,
     IPersistence,
     IRead,
-    IUIKitInteractionParam,
 } from "@rocket.chat/apps-engine/definition/accessors";
 import {
     IUIKitResponse,

@@ -10,13 +10,12 @@ import {
 import {
     IUIKitResponse,
     UIKitBlockInteractionContext,
-    UIKitInteractionContext,
-    UIKitViewCloseInteractionContext,
 } from "@rocket.chat/apps-engine/definition/uikit";
 import { App } from "@rocket.chat/apps-engine/definition/App";
 import { IAppInfo } from "@rocket.chat/apps-engine/definition/metadata";
 import { HelloWorldCommand } from "./Commands/HelloWorldCommand";
 import { ExecuteHandleBasicModal } from "./handlers/ExecuteBasicModalHandler";
+import { ModifyUICommand } from "./Commands/ModifyUICommand";
 
 export class PracticeRocketChatApp extends App {
     appLogger: ILogger;
@@ -33,6 +32,8 @@ export class PracticeRocketChatApp extends App {
         await configuration.slashCommands.provideSlashCommand(
             helloWorldCommand
         );
+        const modifyUICommand: ModifyUICommand = new ModifyUICommand();
+        await configuration.slashCommands.provideSlashCommand(modifyUICommand);
     }
 
     public async ExecuteHandleBasicModalHandler(
@@ -47,7 +48,7 @@ export class PracticeRocketChatApp extends App {
             read,
             http,
             persistence,
-            modify,
+            modify
         );
         return await handler.handleBasicModal(context);
     }
